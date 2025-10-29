@@ -24,10 +24,24 @@ function App() {
     winnerHighlight: '#E8F5E9'
   })
 
+  // Spacing configuration state
+  const [spacing, setSpacing] = useState({
+    roundGap: 80,
+    matchHeight: 80,
+    matchWidth: 200
+  })
+
   const handleColorChange = (colorKey, value) => {
     setColors(prev => ({
       ...prev,
       [colorKey]: value
+    }))
+  }
+
+  const handleSpacingChange = (spacingKey, value) => {
+    setSpacing(prev => ({
+      ...prev,
+      [spacingKey]: parseInt(value) || 0
     }))
   }
 
@@ -343,6 +357,48 @@ function App() {
             </div>
           </div>
 
+          <div className="spacing-controls">
+            <h3>Spacing Configuration</h3>
+            <div className="spacing-grid">
+              <div className="spacing-control">
+                <label htmlFor="roundGap">Round Gap (px)</label>
+                <input
+                  type="range"
+                  id="roundGap"
+                  min="40"
+                  max="200"
+                  value={spacing.roundGap}
+                  onChange={(e) => handleSpacingChange('roundGap', e.target.value)}
+                />
+                <span className="spacing-value">{spacing.roundGap}px</span>
+              </div>
+              <div className="spacing-control">
+                <label htmlFor="matchHeight">Match Height (px)</label>
+                <input
+                  type="range"
+                  id="matchHeight"
+                  min="60"
+                  max="150"
+                  value={spacing.matchHeight}
+                  onChange={(e) => handleSpacingChange('matchHeight', e.target.value)}
+                />
+                <span className="spacing-value">{spacing.matchHeight}px</span>
+              </div>
+              <div className="spacing-control">
+                <label htmlFor="matchWidth">Match Width (px)</label>
+                <input
+                  type="range"
+                  id="matchWidth"
+                  min="150"
+                  max="300"
+                  value={spacing.matchWidth}
+                  onChange={(e) => handleSpacingChange('matchWidth', e.target.value)}
+                />
+                <span className="spacing-value">{spacing.matchWidth}px</span>
+              </div>
+            </div>
+          </div>
+
           <div className="color-controls">
             <h3>Color Theme</h3>
             <div className="color-grid">
@@ -456,6 +512,9 @@ function App() {
               fontFamily={selectedFont}
               viewMode={viewMode}
               colors={colors}
+              matchWidth={spacing.matchWidth}
+              matchHeight={spacing.matchHeight}
+              roundGap={spacing.roundGap}
             />
           </div>
         </div>
